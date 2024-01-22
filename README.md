@@ -12,21 +12,21 @@ Welcome to the **Learn Linux** course! Dive into the world of Linux, the backbon
 
 ## Course Structure 📚
 
-### [1. Where to Start](01_where_to_start/)
+### [1. Where to Start](01_where_to_start/README.md)
 - Dive into the basics and set up your Linux journey.
 
-### [2. Linux Basics](02_linux_basics/)
+### [2. Linux Basics](02_linux_basics/README.md)
 - Familiarize yourself with the foundational concepts and commands.
 
-### [3. Access Control and Rootly Powers](03_access_control_and_rootly_powers/)
+### [3. Access Control and Rootly Powers](03_access_control_and_rootly_powers/README.md)
 - Understand the Linux permission system and superuser capabilities.
 
-### [4. Process Control](04_process_control/)
+### [4. Process Control](04_process_control/README.md)
 - Manage and control processes running on a Linux system.
 
 ... (similar structure for other chapters)
 
-### [31. Methodology, Policy, and Politics](31_methodology_policy_and_politics/)
+### [31. Methodology, Policy, and Politics](31_methodology_policy_and_politics/README.md)
 - Delve into the broader context of Linux in the IT world, including best practices and community dynamics.
 
 ## Let's Begin! 🚀
