@@ -1,38 +1,64 @@
+# Learn Linux
 
-# Learn Linux 🐧
+A practical, open-source Linux course from The Tech Hustle for learners who want to operate real systems, not just memorize commands.
 
-Welcome to the **Learn Linux** course! Dive into the world of Linux, the backbone of the internet, cloud, and a myriad of devices. Mastering Linux equips you with a versatile skill set that is in demand across various IT roles. 🚀
+![Learn Linux operator loop](docs/assets/images/operator-loop.svg)
 
-## Why Learn Linux? 🌌
+## What changed
 
-- **Universality**: Linux is everywhere - from personal computers to servers and even mobile devices.
-- **Empowerment**: Get full control and understanding of the systems you work with.
-- **Open Source**: Dive deep into the code, tweak, and customize as per your needs.
-- **Career Booster**: Many IT roles require or benefit from Linux knowledge.
+This repository is now structured as a full course site powered by [MkDocs Material](https://squidfunk.github.io/mkdocs-material/). The course includes a modern landing page, searchable lesson navigation, lab setup guidance, a syllabus, glossary, capstone project, QA checklist, and repeatable build commands.
 
-## Course Structure 📚
+## Course focus
 
-### [1. Where to Start](01_where_to_start/README.md)
-- Dive into the basics and set up your Linux journey.
+Learn Linux teaches the operator loop:
 
-### [2. Linux Basics](02_linux_basics/README.md)
-- Familiarize yourself with the foundational concepts and commands.
+1. Inspect the system.
+2. Make the smallest safe change.
+3. Verify with evidence.
+4. Document the result.
+5. Automate what becomes repeatable.
 
-### [3. Access Control and Rootly Powers](03_access_control_and_rootly_powers/README.md)
-- Understand the Linux permission system and superuser capabilities.
+The lessons cover Linux fundamentals, shell usage, packages, users, permissions, processes, filesystems, logs, networking, routing, DNS, storage, containers, CI/CD, security, monitoring, performance analysis, and operations practice.
 
-### [4. Process Control](04_process_control/README.md)
-- Manage and control processes running on a Linux system.
+## Run locally
 
-... (similar structure for other chapters)
+```bash
+python3 -m pip install -r requirements.txt
+mkdocs serve
+```
 
-### [31. Methodology, Policy, and Politics](31_methodology_policy_and_politics/README.md)
-- Delve into the broader context of Linux in the IT world, including best practices and community dynamics.
+Then open `http://127.0.0.1:8000`.
 
-## Let's Begin! 🚀
+You can also use the Makefile:
 
-The world of Linux is vast and rich with history, nuances, and powerful tools. This course will take you on a journey from the basics to advanced topics, ensuring you're well-equipped to tackle real-world challenges with Linux.
+```bash
+make install
+make serve
+```
 
----
+## Build
 
-Ready to dive in? Let's explore the fascinating world of Linux together! 🐧🌍
+```bash
+mkdocs build --strict
+```
+
+## Repository layout
+
+```text
+docs/
+  index.md                 # Course landing page
+  course/                  # Overview, setup, syllabus, glossary, capstone
+  lessons/                 # Chapter and lesson Markdown
+  project/                 # Modernization notes and QA checklist
+  assets/                  # Course visuals
+mkdocs.yml                 # Static course site configuration
+scripts/modernize_course.py # Repeatable content cleanup/enrichment script
+```
+
+## Modernization notes
+
+See [docs/project/modernization-notes.md](docs/project/modernization-notes.md) for the concern log and implementation decisions.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
