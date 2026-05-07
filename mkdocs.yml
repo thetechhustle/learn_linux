@@ -1,0 +1,127 @@
+site_name: Learn Linux
+site_description: A practical Linux course for operators, builders, and cloud engineers.
+site_url: https://thetechhustle.github.io/learn_linux/
+repo_url: https://github.com/thetechhustle/learn_linux
+repo_name: thetechhustle/learn_linux
+edit_uri: edit/main/docs/
+docs_dir: docs
+
+copyright: Copyright &copy; The Tech Hustle
+
+theme:
+  name: material
+  custom_dir: docs/overrides
+  language: en
+  logo: assets/images/linux-course-mark.svg
+  favicon: assets/images/linux-course-mark.svg
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: black
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+    - content.action.edit
+    - content.action.view
+
+plugins:
+  - search
+
+validation:
+  nav:
+    omitted_files: ignore
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      base_path:
+        - docs/includes
+
+extra_css:
+  - stylesheets/course.css
+
+extra_javascript:
+  - javascripts/course.js
+
+nav:
+  - Home: index.md
+  - Course:
+      - Overview: course/overview.md
+      - Lab Setup: course/lab-setup.md
+      - Syllabus: course/syllabus.md
+      - Capstone: course/capstone.md
+      - Glossary: course/glossary.md
+  - Lessons:
+      - Where to Start: lessons/01_where_to_start/README.md
+      - Booting and System Management Daemons: lessons/02_booting_and_system_management_daemons/README.md
+      - Access Control and Rootly Powers: lessons/03_access_control_and_rootly_powers/README.md
+      - Process Control: lessons/04_process_control/README.md
+      - The Filesystem: lessons/05_the_filesystem/README.md
+      - Software Installation and Management: lessons/06_software_installation_and_management/README.md
+      - Scripting and the Shell: lessons/07_scripting_and_the_shell/README.md
+      - User Management: lessons/08_user_management/README.md
+      - Cloud Computing: lessons/09_cloud_computing/README.md
+      - Logging: lessons/10_logging/README.md
+      - Drivers and the Kernel: lessons/11_drivers_and_the_kernel/README.md
+      - Printing: lessons/12_printing/README.md
+      - TCP/IP Networking: lessons/13_tcp_ip_networking/README.md
+      - Physical Networking: lessons/14_physical_networking/README.md
+      - IP Routing: lessons/15_ip_routing/README.md
+      - DNS: lessons/16_dns_the_domain_name_system/README.md
+      - Single Sign-On: lessons/17_single_sign-on/README.md
+      - Electronic Mail: lessons/18_electronic_mail/README.md
+      - Web Hosting: lessons/19_web_hosting/README.md
+      - Storage: lessons/20_storage/README.md
+      - Network File System: lessons/21_the_network_file_system/README.md
+      - SMB: lessons/22_smb/README.md
+      - Configuration Management: lessons/23_configuration_management/README.md
+      - Virtualization: lessons/24_virtualization/README.md
+      - Containers: lessons/25_containers/README.md
+      - CI/CD: lessons/26_continuous_integration_and_delivery/README.md
+      - Security: lessons/27_security/README.md
+      - Monitoring: lessons/28_monitoring/README.md
+      - Performance Analysis: lessons/29_performance_analysis/README.md
+      - Data Center Basics: lessons/30_data_center_basics/README.md
+      - Methodology, Policy, and Politics: lessons/31_methodology_policy_and_politics/README.md
+  - Project:
+      - Modernization Notes: project/modernization-notes.md
+      - QA Checklist: project/qa-checklist.md
+      - QA Review 2026-05-07: project/qa-review-2026-05-07.md

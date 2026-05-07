@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Learn Linux course mark</title>
+  <desc id="desc">Terminal prompt inside a shield shape.</desc>
+  <defs>
+    <linearGradient id="g" x1="18" y1="10" x2="110" y2="118" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#14b8a6"/>
+      <stop offset="0.55" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#g)" d="M64 6 112 24v34c0 31-20 53-48 64-28-11-48-33-48-64V24L64 6Z"/>
+  <rect x="29" y="36" width="70" height="50" rx="8" fill="#0b1220" opacity="0.94"/>
+  <path d="m43 53 12 11-12 11" fill="none" stroke="#5eead4" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M62 76h25" stroke="#e5e7eb" stroke-width="7" stroke-linecap="round"/>
+</svg>

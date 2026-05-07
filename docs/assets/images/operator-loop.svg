@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 340" role="img" aria-labelledby="title desc">
+  <title id="title">Linux operator learning loop</title>
+  <desc id="desc">A five-step loop: inspect, change, verify, document, automate.</desc>
+  <rect width="920" height="340" rx="20" fill="#0f172a"/>
+  <g font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" text-anchor="middle">
+    <g transform="translate(110 170)"><circle r="66" fill="#14b8a6"/><text y="8" fill="#042f2e">Inspect</text></g>
+    <g transform="translate(285 170)"><circle r="66" fill="#60a5fa"/><text y="8" fill="#082f49">Change</text></g>
+    <g transform="translate(460 170)"><circle r="66" fill="#a78bfa"/><text y="8" fill="#2e1065">Verify</text></g>
+    <g transform="translate(635 170)"><circle r="66" fill="#fbbf24"/><text y="8" fill="#451a03">Document</text></g>
+    <g transform="translate(810 170)"><circle r="66" fill="#34d399"/><text y="8" fill="#052e16">Automate</text></g>
+  </g>
+  <g stroke="#e5e7eb" stroke-width="5" stroke-linecap="round" opacity="0.8">
+    <path d="M180 170h34"/><path d="M355 170h34"/><path d="M530 170h34"/><path d="M705 170h34"/>
+  </g>
+  <text x="460" y="62" fill="#f8fafc" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="800" text-anchor="middle">The Linux Operator Loop</text>
+  <text x="460" y="292" fill="#cbd5e1" font-family="Inter, Arial, sans-serif" font-size="20" text-anchor="middle">Every lesson turns concepts into a low-risk, evidence-based workflow.</text>
+</svg>
