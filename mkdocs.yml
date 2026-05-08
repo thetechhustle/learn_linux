@@ -10,7 +10,6 @@ copyright: Copyright &copy; The Tech Hustle
 
 theme:
   name: material
-  custom_dir: docs/overrides
   language: en
   logo: assets/images/linux-course-mark.svg
   favicon: assets/images/linux-course-mark.svg
