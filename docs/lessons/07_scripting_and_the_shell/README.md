@@ -46,6 +46,6 @@ Your journey through the shell starts now. Let's begin! 🖥️🎉
 - [07.6 Ruby Programming 💎](07.6_ruby_programming.md)
 - [07.7 Library and Environment Management for Python and Ruby](07.7_library_and_environment_management_for_python_and_ruby.md)
 - [Revision Control with Git - Your Time Machine 🕰️](07.8_revision_control_with_git.md)
-- [07.9 Recommended Reading for the Voracious Learner 📖🧠](07.9_recommended_reading.md)
+- [07.9 Recommended Reading](07.9_recommended_reading.md)
 
 <!-- lesson-index:end -->
