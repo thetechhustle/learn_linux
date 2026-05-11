@@ -1,39 +1,259 @@
-## Chapter 10: Learning the Language of Linux Logs 📚💬
+# Chapter 10: Logging
 
-Picture yourself in the middle of a Linux-powered vast landscape, where an intricate network of paths represents the complex operations your system performs every second. Now, imagine if every action taken on these paths left a footprint, a clear mark that you could follow to understand the journey of your system's operation. That's what logs are - they are the storytellers of your Linux system, chronicling every event, whispering the secrets of your system's past and hints about its future. 🕵️‍♂️📖
+Logs are operational evidence. They show what the system, kernel, services, applications, and users reported before, during, and after a problem.
 
-Logs are a goldmine, not just for solving the puzzles of software hiccups but for anticipating and thwarting potential problems before they escalate into serious issues. In this chapter, "10_logging", we pull back the curtain to reveal the vital importance of logging in Linux. It's like having the superpower to look back in time, to see the hidden details that can explain what's happening right now or predict what might happen next. Imagine being fluent in this essential language of Linux logs, you'll become a savvy navigator in your Linux endeavors.
+A Linux operator does not read logs only after something breaks. Good logging habits help you verify changes, explain incidents, detect suspicious activity, protect audit trails, and hand off work clearly.
 
-### Navigate the Log Landscape 🌐🗺️
+!!! abstract "What you will learn"
+    - Find the main places Linux systems store logs.
+    - Use the systemd journal and traditional syslog with a clear purpose.
+    - Inspect kernel, boot, service, and application evidence.
+    - Rotate logs without losing needed history.
+    - Plan for centralized logging at scale.
+    - Write logging policies that balance troubleshooting, security, privacy, and retention.
 
-**10.1_log_locations**: Your first destination on this exploratory journey will be locating the treasure chest. We'll uncover where Linux stores its valuable logs, establishing the map you'll need to start tracking the hidden actions within your system.
+!!! example "Field story"
+    A web service was restarted overnight and now users report intermittent errors. The service is running now, but that does not explain what happened.
 
-**10.2_the_systemd_journal**: No more cryptic scrolls! The systemd journal is your modern-day digital diary, simplifying the chronicling of system events in a superbly structured format. Here, we'll decrypt this innovative logging system that streamlines your search for answers.
+    A good operator builds a timeline: deployment notes, `systemctl` state, journal entries, application errors, kernel messages, disk usage, load balancer health, and any upstream provider events. Logs turn "it was broken" into evidence.
 
-**10.3_syslog**: Consider syslog as the wise elder of Linux log protocols, a time-honored tradition that has been relaying messages since Linux's early days. We'll delve into the workings of this classic yet robust logging system.
+!!! success "Operator principle"
+    Logs are only useful when you know where they live, how long they are retained, what time zone they use, and which layer produced them.
 
-**10.4_kernel_and_boot-time_logging**: The kernel is like the captain of your system's ship, and boot-time logs are its logs of initial voyages. Learn how to interpret these logs to ensure a smooth sailing startup sequence and healthy system core.
+## What logs can prove
 
-**10.5_management_and_rotation_of_log_files**: You'll master the art of keeping your log library tidy and efficient without losing critical historical records. We're talking about the seamless rotation and management of log files that are key for uninterrupted system insights.
+Logs can answer questions like:
 
-**10.6_management_of_logs_at_scale**: As you amplify your Linux prowess, you'll need to know how to handle the magnitude and complexity of logs in larger systems. It’s like being the conductor of an orchestra, ensuring each instrument (log) plays in harmony and is heard when it should be.
+- When did a service start, stop, reload, or crash?
+- Which config file or command changed behavior?
+- Did the kernel report hardware, driver, memory, or filesystem trouble?
+- Did authentication succeed or fail?
+- Did a scheduled job run?
+- Did an application return errors before users noticed?
+- Did disk pressure, memory pressure, or dependency failure appear first?
+- Did a request reach the host at all?
 
-**10.7_logging_policies**: And lastly, we will forge the compass that guides you: well-defined logging policies. These will become the principles to upkeep your system’s integrity, protect it against legal challenges, and maintain meticulous compliance standards.
+Logs are not perfect truth. They can be missing, delayed, rotated away, filtered, spoofed, or written in the wrong time zone. Treat them as evidence to compare with other evidence.
 
-By the end of this chapter, you’ll not only apprehend the “what” and “where” of logs, but also the “why” and “how”. Unveiling these enigmas of the Linux logs will gear you up to be that linchpin in your team, the one who decodes issues that leave others lost, the one who anticipates the unexpected in the intricate world of technology.
+## The main logging layers
 
-Now, take this leap into the narrative of logs with focus and enthusiasm. Trust that every step in this journey through Chapter 10 will fortify your Linux skills, laying down the building blocks for your aspiring future in Software Engineering (SWE), DevOps, Site Reliability Engineering (SRE), and Cloud Engineering. Are you ready to transform confusion into clarity, and challenges into triumphs? Let’s set forth. 🚀🐧💼
+Linux logging usually spans several layers:
+
+- Kernel logs: boot messages, drivers, hardware events, network events, filesystem warnings, and low-level errors.
+- Service manager logs: `systemd` unit starts, stops, failures, restarts, and dependency behavior.
+- Syslog-style logs: traditional text logs under `/var/log`.
+- Application logs: service-specific files, structured JSON logs, web access logs, error logs, and job output.
+- Authentication logs: SSH, sudo, login, and PAM-related events.
+- Audit and security logs: explicit policy-driven events when audit tooling is enabled.
+- Remote logs: centralized logging systems, SIEM tools, cloud logging, and provider audit logs.
+
+When troubleshooting, avoid reading one log in isolation. Build a timeline across layers.
+
+## First commands to know
+
+Start with read-only inspection:
+
+```bash
+systemctl --failed
+journalctl -p warning..alert --since "1 hour ago"
+journalctl -u <service> --since "1 hour ago"
+dmesg --ctime | tail -n 50
+ls -lh /var/log
+df -h /var/log
+```
+
+Common text-log inspection:
+
+```bash
+sudo tail -n 100 /var/log/syslog
+sudo tail -n 100 /var/log/messages
+sudo tail -n 100 /var/log/auth.log
+sudo tail -n 100 /var/log/secure
+```
+
+Different distributions use different filenames. Debian and Ubuntu commonly use `/var/log/syslog` and `/var/log/auth.log`. RHEL-family systems commonly use `/var/log/messages` and `/var/log/secure`.
+
+## Time matters
+
+Logging work depends on time alignment.
+
+Check the host clock:
+
+```bash
+timedatectl
+date --iso-8601=seconds
+```
+
+When making an incident timeline, record:
+
+- local time zone.
+- UTC time, when available.
+- service restart times.
+- deployment times.
+- user report times.
+- provider event times.
+- log retention window.
+
+If two systems disagree about time, correlation becomes unreliable.
+
+## What this chapter covers
+
+### 10.1 Log locations
+
+You will learn where Linux systems commonly store logs and how to inspect `/var/log` without assuming every distribution is the same.
+
+Key operator questions:
+
+- Which logs are local?
+- Which logs are remote?
+- Which logs are compressed or rotated?
+- Which logs require privilege to read?
+- Which logs belong to the service being investigated?
+
+### 10.2 The systemd journal
+
+You will learn how to use `journalctl` to inspect structured service and system events.
+
+Key operator questions:
+
+- Which unit produced the message?
+- What happened before and after the failure?
+- Is the journal persistent across reboots?
+- Are you filtering by unit, priority, boot, or time range?
+
+### 10.3 Syslog
+
+You will learn the traditional syslog model, including facilities, priorities, local files, and forwarding.
+
+Key operator questions:
+
+- Which daemon receives syslog messages?
+- Which file receives a facility or priority?
+- Are messages forwarded to a central collector?
+- Are local and remote logs consistent?
+
+### 10.4 Kernel and boot-time logging
+
+You will learn how to inspect kernel and boot evidence with `dmesg`, the journal, and boot-specific filters.
+
+Key operator questions:
+
+- Did the kernel report device, driver, memory, or filesystem errors?
+- Did a problem start at boot or later?
+- Are messages from the current boot or an older boot?
+
+### 10.5 Management and rotation of log files
+
+You will learn why logs grow, how rotation protects disk space, and how retention choices affect investigations.
+
+Key operator questions:
+
+- Are logs filling the filesystem?
+- Is rotation configured?
+- Are compressed logs still searchable?
+- Does retention match operational and compliance needs?
+
+### 10.6 Management of logs at scale
+
+You will learn why larger systems centralize logs and how collection changes the troubleshooting workflow.
+
+Key operator questions:
+
+- Are logs collected from every host?
+- Are application logs structured?
+- Can you search by service, host, request ID, and time range?
+- What happens when the collector is unavailable?
+
+### 10.7 Logging policies
+
+You will learn how to decide what to log, how long to keep it, who can read it, and what data should not appear in logs.
+
+Key operator questions:
+
+- Are secrets or personal data being logged?
+- Who can read sensitive logs?
+- How long are logs retained?
+- Which logs are required for audit, security, or incident response?
+
+## Logging during changes
+
+Before changing a service, capture the current evidence:
+
+```bash
+systemctl status <service>
+journalctl -u <service> --since "30 minutes ago"
+df -h
+```
+
+After the change, capture new evidence:
+
+```bash
+systemctl status <service>
+journalctl -u <service> --since "5 minutes ago"
+```
+
+For web services, include an application check:
+
+```bash
+curl -I http://127.0.0.1:<port>/
+```
+
+The handoff should say what changed, when it changed, what logs were checked, and what verification passed.
+
+## Logging safety
+
+Be careful with logs. They often contain sensitive data:
+
+- usernames.
+- IP addresses.
+- tokens.
+- request paths.
+- email addresses.
+- stack traces.
+- database errors.
+- customer data.
+
+Do not paste raw sensitive logs into public tickets, chat rooms, or documentation. Redact secrets and personal data. Preserve enough context to troubleshoot without exposing more than necessary.
+
+## Hands-on practice
+
+Use a disposable VM, local lab machine, or container with `systemd` support where possible.
+
+1. Pick one running service.
+2. Check its current `systemctl` status.
+3. Read the last hour of journal entries for that service.
+4. Find the main `/var/log` files on the system.
+5. Check whether `/var/log` has enough free space.
+6. Write a short timeline from the evidence you found.
+
+Example timeline:
+
+```text
+10:02 UTC: service restarted by systemd.
+10:03 UTC: app logged database connection timeout.
+10:04 UTC: kernel reported no disk or memory errors.
+10:05 UTC: health endpoint returned HTTP 200 locally.
+Conclusion: service recovered; next check is database connectivity and upstream dependency health.
+```
+
+## Check your understanding
+
+- Why should you compare journal logs, application logs, and kernel logs during an incident?
+- What is the difference between current boot logs and older boot logs?
+- Why can log rotation make troubleshooting harder?
+- What sensitive information should not be copied into a public ticket?
+- What should a good log-based handoff include?
 
 <!-- lesson-index:start -->
 
 ## Lessons in this chapter
 
-- [10.1 Log Locations 🗂️📍](10.1_log_locations.md)
-- [10.2 The systemd Journal 📖✨](10.2_the_systemd_journal.md)
-- [10.3_syslog: The Classic Logging Workflow 📚👴](10.3_syslog.md)
+- [10.1 Log Locations](10.1_log_locations.md)
+- [10.2 The systemd Journal](10.2_the_systemd_journal.md)
+- [10.3 Syslog](10.3_syslog.md)
 - [10.4 Kernel and Boot-time Logging](10.4_kernel_and_boot-time_logging.md)
-- [10.5 Management and Rotation of Log Files 📚🔄📁](10.5_management_and_rotation_of_log_files.md)
-- [10.6 Management of Logs at Scale 📊📈](10.6_management_of_logs_at_scale.md)
-- [10.7_logging_policies: Navigating Successfully with a Sound Strategy 📚🧭🔐](10.7_logging_policies.md)
+- [10.5 Management and Rotation of Log Files](10.5_management_and_rotation_of_log_files.md)
+- [10.6 Management of Logs at Scale](10.6_management_of_logs_at_scale.md)
+- [10.7 Logging Policies](10.7_logging_policies.md)
 
 <!-- lesson-index:end -->
