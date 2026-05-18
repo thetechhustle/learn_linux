@@ -1,48 +1,91 @@
-## Chapter 5: The Filesystem — The Heart of Linux 🌟
+# Chapter 05: The Filesystem
 
-### Chapter 05: The Filesystem 📁
+Filesystems are where Linux turns hardware, processes, users, and
+applications into something you can inspect and manage. When a service cannot
+write a file, a disk fills during a release, a mount disappears after reboot,
+or a backup misses critical data, the first useful step is usually filesystem
+evidence.
 
-#### “Navigating the Maze: Mastering the Linux Filesystem”
+This chapter teaches the filesystem as an operator surface, not just a place
+to store files. You will learn how to move through pathnames, recognize mount
+boundaries, read the standard file tree, identify file types, inspect file
+metadata, and use access control lists when basic permission bits are not
+enough.
 
-Hello, trailblazer! Welcome to a chapter that's critical to your journey through the Linux landscape. Picture the filesystem as a vast, intricate web, a maze where data resides, and knowledge is written in silent, stoic directories and files. As you prepare to venture through this labyrinth, remember, knowing the layout, recognizing the signs, and having the keys to every room doesn't just make the journey easier; it makes it possible. 🗺️
+## What You Should Be Able to Do
 
-In Chapter 5, we are unfurling the map of Linux's heart - the Filesystem. **"Why should I care about the filesystem?"**, you might wonder. Just as a librarian needs to know the layout of a library to locate a book, or a city dweller needs to navigate streets to find a destination, your effectiveness in administering Linux systems, whether it be for SWE, DevOps, SRE, or Cloud Engineering, hinges on understanding the filesystem.
+By the end of this chapter, you should be able to:
 
-### 🌳 05.3 Organization of the File Tree
-First, let's wander through the organization of the file tree. Knowing which ‘branch’ contains what information is no mere detail, it's your foundation. Each directory and subdirectory has its purpose, its own set of secrets and tools. And trust me, with this understanding, you’ll never feel lost again.
+- Explain the difference between a pathname problem, a mount problem, a
+  permission problem, and a capacity problem.
+- Use `pwd`, `ls`, `stat`, `find`, `df`, `du`, `mount`, and related tools to
+  collect read-only evidence before changing a system.
+- Identify important top-level directories such as `/etc`, `/var`, `/home`,
+  `/usr`, `/opt`, `/tmp`, `/proc`, and `/dev`.
+- Recognize regular files, directories, symbolic links, device files, sockets,
+  and pipes.
+- Interpret file ownership, modes, timestamps, inode data, and extended
+  attributes as operational signals.
+- Decide when standard Unix permissions are enough and when ACLs are the right
+  tool.
 
-### 🔒 05.5 File Attributes
-The details make the difference. File attributes are like the DNA of the files - they hold the essence of the file's permissions and properties. Mastery here brings precision in managing your system's security and efficiency.
+## Operator Scenario
 
-### 🛡 05.6 Access Control Lists
-Don't just rely on locks; learn to use advanced security systems. Access Control Lists (ACLs) offer a more nuanced approach to permissions, a way to grant exact access to those who need it, keeping the intruders out.
+Imagine a deployment fails because the application says it cannot write its
+cache file. A weak response is to change permissions until the error goes away.
+A stronger response is to prove what is happening:
 
-### 🗂 05.4 File Types
-Files come in all shapes and sizes. Recognizing the different file types is like understanding various languages; it opens up whole new worlds of interactions and capabilities. They whisper what can be done with them, and knowing this, you can speak their language fluently.
+```bash
+pwd
+ls -ld /var /var/cache /var/cache/example
+stat /var/cache/example
+df -h /var/cache/example
+mount | grep ' /var '
+getfacl /var/cache/example 2>/dev/null || true
+```
 
-### 🎣 05.2 Filesystem Mounting and Unmounting
-Mounting and unmounting is not just about climbing; it's about connecting worlds. Grasping this concept lets you attach and remove different storage devices and filesystems, greatly expanding the horizons of your Linux environment.
+Those commands separate several different failure modes:
 
-### 🛤 05.1 Pathnames
-Pathnames will be your compass as you navigate through this digital maze. Understanding the significance of each part of a pathname ensures that the steps you take are in the right direction.
+- The path might be wrong.
+- The directory might live on a read-only or full filesystem.
+- Ownership or mode bits might block the application user.
+- An ACL might override what the basic mode bits suggest.
+- A symbolic link might point somewhere unexpected.
 
-Imagine unlocking the power to navigate, control, and secure this ecosystem at your fingertips. That's not just an edge - that's a superpower. 🦸 With every page of this chapter, you fortify your skill set and confidence.
+This is the habit the chapter builds: collect enough evidence to make the next
+change small, reversible, and explainable.
 
-So let's turn the page and step into a world where confusion turns into clarity, where overwhelming complexity becomes understandable simplicity, and where each step you take solidifies your path towards becoming a Linux master.
+## Study Path
 
-Breathe, focus, and move forward with purpose. This chapter is not just an essential piece of the puzzle; it's your guide through the digital wilderness. Let’s begin our detailed expedition into the lifeblood of any Linux system - the Filesystem. 🌲🔍
+Start with pathnames, because every filesystem investigation depends on naming
+the target precisely. Then study mounting so you understand where one
+filesystem ends and another begins. After that, learn the file tree, file
+types, attributes, and ACLs as layers of evidence you can combine during real
+troubleshooting.
 
-Welcome to Chapter 5 - your GPS through the intricacies of Linux, ensuring you never get lost as you create, manage, and secure your digital realms. 🗺️🚀
+For each lesson, keep a short lab note with three parts:
+
+1. The read-only command you ran.
+2. The important line of output.
+3. The operational conclusion you can safely draw from it.
+
+## Safety Notes
+
+Filesystem commands can be deceptively risky. Prefer read-only inspection while
+learning. Be careful with `rm`, recursive ownership changes, recursive
+permission changes, and commands that write to block devices or mounted
+filesystems. In production, capture the current state before changing it and
+make sure you know how to undo the change.
 
 <!-- lesson-index:start -->
 
 ## Lessons in this chapter
 
-- [🛤 05.1 Pathnames](05.1_pathnames.md)
-- [05.2 Filesystem Mounting and Unmounting 🎣](05.2_filesystem_mounting_and_unmounting.md)
-- [🌳 Organization of the File Tree](05.3_organization_of_the_file_tree.md)
-- [🗂 05.4 File Types](05.4_file_types.md)
-- [📖 05.5 File Attributes](05.5_file_attributes.md)
-- [05.6 Access Control Lists (ACLs) 🛡](05.6_access_control_lists.md)
+- [05.1 Pathnames](05.1_pathnames.md)
+- [05.2 Filesystem Mounting and Unmounting](05.2_filesystem_mounting_and_unmounting.md)
+- [05.3 Organization of the File Tree](05.3_organization_of_the_file_tree.md)
+- [05.4 File Types](05.4_file_types.md)
+- [05.5 File Attributes](05.5_file_attributes.md)
+- [05.6 Access Control Lists](05.6_access_control_lists.md)
 
 <!-- lesson-index:end -->
