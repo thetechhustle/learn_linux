@@ -23,7 +23,7 @@ Use a disposable lab system for experimentation. Chapter 01 is mostly orientatio
 - [1.02 Suggested Background](1.02_suggested_background.md)
 - [1.03 Linux Distributions](1.03_linux_distributions.md)
 - [1.04 Example Systems Used in This Book](1.04_example_systems_used_in_this_book.md)
-- [Subchapter 1.05: Notation and Typographical Conventions](1.05_notation_and_typographical_conventions.md)
+- [1.05 Notation and Typographical Conventions](1.05_notation_and_typographical_conventions.md)
 - [1.06 Units](1.06_units.md)
 - [1.07 Man Pages and Other On-line Documentation](1.07_man_pages_and_other_on-line_documentation.md)
 - [1.08 Other Authoritative Documentation](1.08_other_authoritative_documentation.md)
