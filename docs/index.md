@@ -51,6 +51,42 @@ By the end, you should be able to:
 - Build safe labs with VMs or containers before touching production systems.
 - Document findings clearly enough for a teammate to continue the work.
 
+## Where to begin
+
+Not sure where to jump in? Pick the description that fits you best.
+
+<div class="course-grid" markdown>
+
+<div class="course-card" markdown>
+### Absolute beginner
+No Linux experience yet. Start at Chapter 1 and work forward. Every concept is introduced before it is used.
+
+[Start at Chapter 1](lessons/01_where_to_start/README.md){ .md-button }
+</div>
+
+<div class="course-card" markdown>
+### Help desk / support tech
+You know the basics. Jump to Chapter 4 (processes), Chapter 8 (users), or Chapter 10 (logging) for day-to-day operational skills.
+
+[Jump to Chapter 4](lessons/04_process_control/README.md){ .md-button }
+</div>
+
+<div class="course-card" markdown>
+### Software engineer
+You write code but want production confidence. Focus on Chapters 9–13 (cloud, kernel, networking) then Chapters 23–26 (config management, containers, CI/CD).
+
+[Jump to Chapter 9](lessons/09_cloud_computing/README.md){ .md-button }
+</div>
+
+<div class="course-card" markdown>
+### Cloud / DevOps / SRE learner
+You already use Linux but want depth. Head straight to the Operations track: Chapters 20–29 cover storage, security, monitoring, and performance.
+
+[Jump to Chapter 20](lessons/20_storage/README.md){ .md-button }
+</div>
+
+</div>
+
 ## Learning rhythm
 
 1. Read the concept.
@@ -58,6 +94,9 @@ By the end, you should be able to:
 3. Capture command output and explain it in your own words.
 4. Complete the checkpoint questions.
 5. Revisit the field story and decide what you would do first during a real incident.
+
+!!! tip "New to Linux?"
+    Start with the [Glossary](course/glossary.md) to get familiar with common terms, then read [Lab Setup](course/lab-setup.md) before running any commands.
 
 !!! warning "Use a lab"
     Many Linux commands can change system state. Run exercises in a VM, container, cloud sandbox, or spare machine unless you are certain the command is read-only.

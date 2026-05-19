@@ -1,6 +1,6 @@
 # Course Overview
 
-Learn Linux is structured as a full operator path, not a command glossary. The goal is to help you build judgment around real systems.
+Learn Linux is structured as a full operator path, not a command glossary. The goal is to help you build judgment around real systems — not just memorize commands, but understand *why* those commands matter and *what to check next* when something goes wrong.
 
 Use the course to practice the same loop you will use on production work:
 
@@ -14,14 +14,27 @@ Use the course to practice the same loop you will use on production work:
 
 This course is for:
 
-- New Linux learners who want a practical path.
+- New Linux learners who want a practical, structured path from zero.
 - Help desk and support technicians moving toward infrastructure work.
 - Software engineers who need stronger production literacy.
-- Cloud, DevOps, SRE, and cybersecurity learners who need Linux foundations.
+- Cloud, DevOps, SRE, and cybersecurity learners who need solid Linux foundations.
+
+If you can open a terminal and type, you have enough background to start.
 
 ## Prerequisites
 
-You should be comfortable using a keyboard, browser, and terminal window. No prior Linux administration experience is assumed.
+You should be comfortable using a keyboard, browser, and terminal window. No prior Linux administration experience is assumed. If you encounter an unfamiliar term, check the [Glossary](glossary.md) first.
+
+## Time expectations
+
+| Goal | Estimated pace |
+| --- | --- |
+| One lesson | 20–40 minutes |
+| One chapter | 2–5 hours |
+| Full course (all 31 chapters) | 80–120 hours |
+| Capstone project | 4–8 hours additional |
+
+These are loose estimates. Move faster through topics you already know; slow down and repeat labs for topics that feel unfamiliar.
 
 You will get more from the lessons if you keep a disposable lab nearby. See [Lab Setup](lab-setup.md) before running commands that install packages, edit service files, change accounts, touch storage, or alter networking.
 
@@ -47,6 +60,22 @@ Each lesson should answer five questions:
 5. How would you explain the result to a teammate?
 
 When a lesson includes commands, prefer read-only inspection first. Commands such as `ip addr`, `ss -tulpen`, `systemctl status`, `journalctl -u`, `df -h`, `lsblk`, and `findmnt` are usually safer starting points than commands that restart services, rewrite files, or delete data.
+
+## The operator loop
+
+Every lesson reinforces a five-step habit that professional Linux operators use on real systems:
+
+```
+Inspect → Change → Verify → Document → Automate
+```
+
+1. **Inspect** — Read the current state before touching anything. What does the system say right now?
+2. **Change** — Make one targeted change. Prefer the smallest possible intervention.
+3. **Verify** — Confirm the change had the intended effect with evidence (command output, logs, metrics).
+4. **Document** — Write down what you did, what you saw, and what it means — clearly enough for a teammate.
+5. **Automate** — Once a procedure is reliable and documented, encode it so it never needs to be done manually again.
+
+This loop appears in every chapter. By the end of the course it should be instinct.
 
 ## How to Work Through a Chapter
 
